@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using AspNetCoreRateLimit;
 
 namespace Collabra_Test
 {
@@ -30,6 +31,13 @@ namespace Collabra_Test
 
             // This disables the SSL certificate validity check. Works for Webclient that calls the url
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+
+            services.AddOptions();
+            services.AddMemoryCache();
+            services.Configure<IpRateLimitOptions>(Configuration.GetSection("IpRateLimiting"));
+            services.Configure<IpRateLimitPolicies>(Configuration.GetSection("IpRateLimitPolicies"));
+        
+            services.AddRateLimiting();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
