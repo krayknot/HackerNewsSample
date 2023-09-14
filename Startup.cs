@@ -58,6 +58,8 @@ namespace Collabra_Test
 
             app.UseAuthorization();
 
+            app.UseIpRateLimiting();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
